@@ -14,7 +14,7 @@ x = 1;
 var a = 5;
 var b = 10;
 var c = function(a, b, c) {
-   //var a = 8
+   //var a = 8  toman estos valores porque todavía no se ejecuta la function de var c. solo se creó, por eso se toman los valores de c de abajo
    //var b  = 9
    //var c = 10    
   var x = 10;
@@ -30,8 +30,8 @@ var c = function(a, b, c) {
   console.log(b); //9 porque se encuentra dentro de la funcion de var f por lo que este contexto de ejecucion se elimina una vez que termina de ejecutarse y las unicas variables que quedan son las de c
 }
 c(8,9,10);
-console.log(b); //10 variables de c
-console.log(x); //1 por x
+console.log(b); //10 contexto global
+console.log(x); //1 por x 
 ```
 
 ```javascript
@@ -48,7 +48,7 @@ var instructor = "Tony";
 if(true) {
     var instructor = "Franco";
 }
-console.log(instructor); // franco
+console.log(instructor); // franco. si fuese una funcion si seria otro contexto. como es un if no se genera otro contexto y se pisan las variables
 ```
 
 ```javascript
@@ -57,9 +57,9 @@ console.log(instructor); //tony
 (function() {
    if(true) {
       var instructor = "Franco";
-      console.log(instructor); //franco
+      console.log(instructor); 
    }
-})();
+})() //estos dos parentesis significa que se invoca al instante que se crea; //franco
 console.log(instructor); //tony
 ```
 ```javascript
@@ -92,10 +92,15 @@ parseInt("09") // 9
 2 && 5 // 5
 5 || 0 // 5
 0 || 5 // 5
-[3]+[3]-[10] // 23
-3>2>1 //false
+[3]+[3]-[10] // 23  primero parsea los 3 a string, luego los concatena, luego hace el 10 a string, luego los transforma a numeros a todos y 33-10 es 23
+3>2>1 //false = 3>2 si, devuelve true. true>1, parsea el true a numero. 1>1 no, devuelve false
 [] == ![] // true
+//[] == false
+//[] == 0 
+//"" == 0 se parse el array a un string
+//0 == 0 ---> true el array se parsea a 0 
 ```
+
 
 > Si te quedó alguna duda repasá con [este artículo](http://javascript.info/tutorial/object-conversion).
 
@@ -154,8 +159,7 @@ var obj = {
 console.log(obj.prop.getFullname()); //aurelio de rosa porque esta invocando la funcion por lo que entra dentro del objeto obj 
 
 var test = obj.prop.getFullname; 
-console.log(test());// juan perez no esta invocando la funcion sino que esta llamando a la propiedad
-
+console.log(test());// juan perez porque se encuentra dentro del contexto global en consola comun. en node retorna undefined
 ```
 
 ### Event loop
