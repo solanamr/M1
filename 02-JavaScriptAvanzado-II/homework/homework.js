@@ -7,7 +7,7 @@ function counter() {
   // ejemplo: const newCounter = counter();
   // newCounter(); // 1
   // newCounter(); // 2
-    var contador = 1
+  var contador = 0
    return function(){
      return contador ++
    } 
@@ -36,6 +36,13 @@ function cacheFunction(cb) {
     }
   }
 }
+
+//o
+//var cache = {}
+//return function(arg){
+//  if(!cache.hasOwnProperty(arg)) cache[arg] = cb(arg)
+// return obj[arg]
+//}
 
 // Bind
 
