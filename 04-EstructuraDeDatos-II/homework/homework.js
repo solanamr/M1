@@ -12,11 +12,11 @@
 
 function LinkedList() {
   this.head = null
-  this.size = 0
+  
 }
 
 function Node(value){
-  this.data = value;
+  this.value = value;
   this.next = null;
 }
 
@@ -25,84 +25,53 @@ LinkedList.prototype.add = function(value){
   let nuevoNodo = new Node(value)  // creo el nuevo nodo
   let current = this.head      // creo la variable current que apunta a la cabeza
   if(!current){                // Primero evaluo si la lista esta vacia. Pregunto si existe head
-    current = nuevoNodo          // Si no existe lo creo
-  } else {
-    while(current.next){         // mientras exista un valor siguiente
-      current = current.next     // quiero que current se mueva. Recorro la cadena
-    }
+    this.head = nuevoNodo        // Si no existe lo creo
+    return nuevoNodo    
+  }      
+ while(current.next){         // mientras exista un valor siguiente
+  current = current.next     // quiero que current se mueva. Recorro la cadena
+ }
     current.next = nuevoNodo       // Cuando ya no exista un siguiente significa que llegue al final de la lista
-                                 // quiero que el nuevo nodo se ubique ahi.
-  } //si esta en null se le agrega el nuevo nodo creado
+                                  // quiero que el nuevo nodo se ubique ahi.
+    return nuevoNodo;
+                            //si esta en null se le agrega el nuevo nodo creado
 }
 
 LinkedList.prototype.remove = function(){
   let current = this.head
-  if (this.head === null) return null
-  else if(this.head && !this.head.next){ //si hay algo en head pero no se tiene un next
-  let aux = this.head.value
-  this.head = null
-  return aux  
-}
- while(current.next.next){
-   current = current.next
- }
-   let aux = current.next.value
-   current.next = null
-   return aux
+  let removed  //puede haber variables sin informacion. en el transcurso del codigo se le asigna un valor
 
-  // if (this.size === 0) {          //siguiente nodo en la variable value, hace que el nodo actual apunte a null,decrementa el valor de size y retorna value;si la lista está vacía
-  //   return null;                  // retorna null; y si sólamente tiene un elemento, almacenará el valor de head en la variable value, hará que head apunte a null, decrementará el valor de size 
-  // }                               // y retornará value
-  // let current = this.head;
-  // if (this.size === 1) {
-  //   let value = current.value;
-  //   this.head = null;
-  //   this.size--;
-  //   return value;
-  // }                               
-  // while (current.next.next) { // [] => [] => null
-  //   current = current.next;
-  // }
-  // let value = current.next.value;
-  // current.next = null;
-  // this.size--;
-  // return value;
-  //----------------------------------------------
+  if(!current) return null   //tambien puede ser if(this.size === 0) si la lista esta vacia y retorna null
+  else if(!current.next){  //si la lista tiene un solo nodo ademas de head
+    removed = current.value  //se guarda el valor del nodo que se va a eliminar porque es lo que pide retornar
+    this.head = null  //hace que la cabeza se vuelva null para eliminar el unico nodo que tenia la lista
+    return removed  //devuelve el VALOR no el nodo entero
+  }
+  while(current.next.next){  //si hay algo en el nodo que le sigue al nodo donde estamos parados
+    current = current.next //se le asigna el nodo anterior a current
+  }
 
-  // let current = this.head
-  // let previous = null
-
-  // while(current !== null){
-  //   if(current.value === value){
-  //     if(!previous){
-  //       current = current.next
-  //     }else{
-  //       previouse.next = current.next
-  //     }
-  //     this.size -- 
-  //     return current.value
-  //   }
-  //   previous = current
-  //   current = current.next
-  // }
-  // return null
+  removed = current.next.value //se guarda el valor del nodo anterior al que se va a eliminar
+  current.next = null //se corta la union entre current.next con current.next.next y se desvincula el nodo que los une
+  return removed  
 }
 
 
 
 LinkedList.prototype.search = function(elemento){
-  let actual = this.head
-  if(actual === null) return null
-  while(actual){
-      if(actual.elemento === elemento) return actual.elemento
-      else if(typeof value == 'function'){
-        if (elemento(actual.elemento)){
-          return actual.elemento
-        }
-      }
-      current = current.next
-   }
-   return null
+  let current = this.head
+
+  if(!current) return null
+
+  while(current){  //si en current hay algo
+    if(current.value === elemento) return current.value   
+    else if(typeof elemento === 'function'){ //el nodo puede tener una funcion como valor
+      if(elemento(current.value)) return current.value  //se toma el valor del nodo del parametro en el que estoy parado. y si devuelve true se retorna el valor
+    }
+    current = current.next  //se recorre la lista
+  }
+  return null
+
   }
 
 
